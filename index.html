@@ -84,13 +84,50 @@ header{z-index:9}
  background:radial-gradient(ellipse at 48% 48%,rgba(230,219,230,.12) 0%,rgba(165,149,175,.11) 42%,rgba(84,99,129,.08) 64%,transparent 78%);
  filter:blur(30px);opacity:.7;
 }
+</style><style id="landing-to-globe-experience">
+/* Original website composition is the entry experience; the existing globe universe lives behind it. */
+.original-landing{position:absolute;inset:0;z-index:20;display:grid;place-items:center;overflow:hidden;opacity:1;visibility:visible;transition:opacity 1.25s cubic-bezier(.2,.75,.2,1),visibility 1.25s}
+.original-art{position:absolute;inset:-3%;background:url('assets/universe.png') center/contain no-repeat;transform:scale(1.01);transition:transform 2.5s cubic-bezier(.2,.75,.2,1);will-change:transform}
+.original-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(2,3,8,.24),transparent 30%,transparent 72%,rgba(2,3,8,.54))}
+.landing-enter{position:relative;z-index:2;width:clamp(175px,22vw,310px);aspect-ratio:1;border:0;border-radius:50%;background:transparent;color:#fff;cursor:pointer;display:grid;place-items:end center;padding-bottom:5%;font:500 10px Arial,sans-serif;letter-spacing:.23em;text-shadow:0 1px 15px #000,0 0 25px #000;transition:transform .5s,filter .5s}
+.landing-enter span{padding:10px 16px;border:1px solid #ffffff65;background:#05050b99;border-radius:40px;white-space:nowrap;backdrop-filter:blur(10px)}
+.landing-enter:hover,.landing-enter:focus-visible{transform:scale(1.06);filter:drop-shadow(0 0 15px #f3d4e080)}
+.landing-enter:focus-visible{outline:2px solid white;outline-offset:12px}
+.universe-back{position:absolute;top:clamp(20px,3vw,42px);left:clamp(20px,3vw,42px);z-index:12;opacity:0;visibility:hidden;pointer-events:none;background:#05070a8c;color:#fff;border:1px solid #ffffff55;border-radius:50px;padding:12px 17px;letter-spacing:.2em;font-size:10px;cursor:pointer;transition:opacity .8s,visibility .8s}
+.universe-entered .original-landing{opacity:0;visibility:hidden;pointer-events:none}
+.universe-entered .original-art{transform:scale(1.28)}
+.universe-entered .universe-back{opacity:1;visibility:visible;pointer-events:auto}
+.hero .world{opacity:0;transform:translateZ(-110px) scale(.88);transition:opacity 1.6s ease,transform 1.7s cubic-bezier(.18,.7,.22,1)}
+.universe-entered .hero .world{opacity:1;transform:translateZ(0) scale(1)}
+.hero-content{z-index:3;transition:opacity .7s}
+body:not(.universe-entered) .hero-content{opacity:0}
+@media(max-width:700px){.original-art{background-size:cover}.landing-enter{width:clamp(180px,48vw,260px)}}
+@media(prefers-reduced-motion:reduce){.original-landing,.original-art,.hero .world{transition-duration:.01ms}}
 </style></head><body><main><section class="hero" id="home" aria-label="The Future Is Yours immersive universe">
+<div class="original-landing" id="original-landing" aria-label="The Future Is Yours landing page">
+ <div class="original-art" aria-hidden="true"></div>
+ <div class="original-shade" aria-hidden="true"></div>
+ <button type="button" class="landing-enter" id="enter" aria-label="Explore Universe"><span>EXPLORE UNIVERSE</span></button>
+</div>
+<button type="button" class="universe-back" id="universe-back" aria-label="Return to landing page">BACK</button>
+
 <div class="world" id="world"><div class="galaxy"></div><div class="stars"></div><div class="collage" role="img" aria-label="The Future Is Yours art collage floating in a cosmic neural universe"></div><canvas class="neural-canvas" id="neural-canvas" aria-hidden="true"></canvas><div class="ambient"></div><div class="ocean-cover" aria-label="A calm ocean at sunset"></div><div class="globe-shell" id="globe-shell" role="img" tabindex="0" aria-label="Interactive iridescent pearl-glass 3D sphere with original luminous white logo. Drag to rotate or use arrow keys."><canvas id="globe-canvas" aria-hidden="true"></canvas><div id="globe-loading" aria-hidden="true">LOADING UNIVERSE</div></div></div>
 
 <div class="hero-content"><p>An invitation to look within</p></div></section><section class="intro" id="about"><span class="eyebrow">The art of living · Human experience</span><h1>There is a whole universe within you.</h1><p>Explore the connections between art, stories, experiences and the people we become. This is a place for curiosity, presence and the beautiful complexity of being human.</p><div class="links" id="explore"><button id="contact-open" type="button">Get in touch</button><a href="#home">Back to the universe</a></div></section></main><footer><span>© <span id="year"></span> The Future Is Yours</span><span>Presence over performance</span></footer>
 <dialog class="contact-dialog" id="contact-dialog" aria-labelledby="contact-heading"><button type="button" class="close-dialog" id="contact-close" aria-label="Close contact form">×</button><span class="eyebrow">Let's connect</span><h2 id="contact-heading">Get in touch.</h2><p>Have an idea, a question or simply something to share? I'd love to hear from you.</p><form class="contact-form" id="contact-form"><label>Name<input name="name" autocomplete="name" maxlength="100" required></label><label>Email<input type="email" name="email" autocomplete="email" maxlength="254" required></label><label>Message<textarea name="message" maxlength="5000" required></textarea></label><div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div><button type="submit" id="contact-submit">Send message</button><p class="form-status" id="form-status" role="status" aria-live="polite"></p></form></dialog>
 <script>
-document.getElementById('year').textContent=new Date().getFullYear();document.getElementById('enter').addEventListener('click',()=>document.getElementById('about').scrollIntoView({behavior:'smooth'}));const world=document.getElementById('world'),scene=document.querySelector('.hero');let yaw=0,pitch=0,travel=0,dragging=false,px=0,py=0;function updateView(){world.style.setProperty('--yaw',yaw+'deg');world.style.setProperty('--pitch',pitch+'deg');/* travel follows native scrolling in easeWorldScroll */}scene.addEventListener('pointerdown',e=>{if(e.target.closest('a,button'))return;dragging=true;px=e.clientX;py=e.clientY;scene.setPointerCapture(e.pointerId)});scene.addEventListener('pointermove',e=>{if(dragging){yaw=Math.max(-23,Math.min(23,yaw+(e.clientX-px)*.065));pitch=Math.max(-15,Math.min(15,pitch-(e.clientY-py)*.065));px=e.clientX;py=e.clientY}else if(matchMedia('(pointer:fine)').matches){yaw=(e.clientX/innerWidth-.5)*9;pitch=(.5-e.clientY/innerHeight)*6}updateView()});scene.addEventListener('pointerup',()=>dragging=false);scene.addEventListener('pointercancel',()=>dragging=false);// Allow native page scrolling; ease the 3D environment towards the scroll position.
+document.getElementById('year').textContent=new Date().getFullYear();const landing=document.getElementById('original-landing'),back=document.getElementById('universe-back');
+function setUniverseEntered(entered,updateHash=true){
+ document.body.classList.toggle('universe-entered',entered);
+ landing.setAttribute('aria-hidden',entered?'true':'false');
+ document.getElementById('enter').tabIndex=entered?-1:0;
+ back.tabIndex=entered?0:-1;
+ if(updateHash){history.replaceState(null,'',entered?'#universe':'#home')}
+}
+document.getElementById('enter').addEventListener('click',()=>setUniverseEntered(true));
+back.addEventListener('click',()=>setUniverseEntered(false));
+if(location.hash==='#universe')setUniverseEntered(true,false);
+const world=document.getElementById('world'),scene=document.querySelector('.hero');let yaw=0,pitch=0,travel=0,dragging=false,px=0,py=0;function updateView(){world.style.setProperty('--yaw',yaw+'deg');world.style.setProperty('--pitch',pitch+'deg');/* travel follows native scrolling in easeWorldScroll */}scene.addEventListener('pointerdown',e=>{if(!document.body.classList.contains('universe-entered')||e.target.closest('a,button'))return;dragging=true;px=e.clientX;py=e.clientY;scene.setPointerCapture(e.pointerId)});scene.addEventListener('pointermove',e=>{if(!document.body.classList.contains('universe-entered'))return;if(dragging){yaw=Math.max(-23,Math.min(23,yaw+(e.clientX-px)*.065));pitch=Math.max(-15,Math.min(15,pitch-(e.clientY-py)*.065));px=e.clientX;py=e.clientY}else if(matchMedia('(pointer:fine)').matches){yaw=(e.clientX/innerWidth-.5)*9;pitch=(.5-e.clientY/innerHeight)*6}updateView()});scene.addEventListener('pointerup',()=>dragging=false);scene.addEventListener('pointercancel',()=>dragging=false);// Allow native page scrolling; ease the 3D environment towards the scroll position.
 let scrollTravel=0,renderTravel=0;
 function updateScrollTravel(){const rect=scene.getBoundingClientRect();const progress=Math.max(0,Math.min(1,-rect.top/Math.max(scene.offsetHeight,1)));scrollTravel=progress*-120}
 addEventListener('scroll',updateScrollTravel,{passive:true});updateScrollTravel();
