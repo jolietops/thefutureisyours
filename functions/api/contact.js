@@ -5,7 +5,7 @@ const json = (body, status = 200) => new Response(JSON.stringify(body), {
 
 export async function onRequestPost({ request, env }) {
 if (!env.RESEND_API_KEY) return json({ error: 'Email service not configured' }, 503);
-}
+
   const origin = request.headers.get('Origin');
   if (origin) {
     let host;
