@@ -84,118 +84,13 @@ header{z-index:9}
  background:radial-gradient(ellipse at 48% 48%,rgba(230,219,230,.12) 0%,rgba(165,149,175,.11) 42%,rgba(84,99,129,.08) 64%,transparent 78%);
  filter:blur(30px);opacity:.7;
 }
-</style><style id="landing-to-globe-experience">
-/* Original website composition is the entry experience; the existing globe universe lives behind it. */
-.original-landing{position:absolute;inset:0;z-index:20;display:grid;place-items:center;overflow:hidden;opacity:1;visibility:visible;transition:opacity 1.25s cubic-bezier(.2,.75,.2,1),visibility 1.25s}
-.original-art{position:absolute;inset:-3%;background:url('assets/universe.png') center/contain no-repeat;transform:scale(1.01);transition:transform 2.5s cubic-bezier(.2,.75,.2,1);will-change:transform}
-.original-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(2,3,8,.24),transparent 30%,transparent 72%,rgba(2,3,8,.54))}
-.landing-enter{position:relative;z-index:2;width:clamp(175px,22vw,310px);aspect-ratio:1;border:0;border-radius:50%;background:transparent;color:#fff;cursor:pointer;display:grid;place-items:end center;padding-bottom:5%;font:500 10px Arial,sans-serif;letter-spacing:.23em;text-shadow:0 1px 15px #000,0 0 25px #000;transition:transform .5s,filter .5s}
-.landing-enter span{padding:10px 16px;border:1px solid #ffffff65;background:#05050b99;border-radius:40px;white-space:nowrap;backdrop-filter:blur(10px)}
-.landing-enter:hover,.landing-enter:focus-visible{transform:scale(1.06);filter:drop-shadow(0 0 15px #f3d4e080)}
-.landing-enter:focus-visible{outline:2px solid white;outline-offset:12px}
-.universe-back{position:absolute;top:clamp(20px,3vw,42px);left:clamp(20px,3vw,42px);z-index:12;opacity:0;visibility:hidden;pointer-events:none;background:#05070a8c;color:#fff;border:1px solid #ffffff55;border-radius:50px;padding:12px 17px;letter-spacing:.2em;font-size:10px;cursor:pointer;transition:opacity .8s,visibility .8s}
-.universe-entered .original-landing{opacity:0;visibility:hidden;pointer-events:none}
-.universe-entered .original-art{transform:scale(1.28)}
-.universe-entered .universe-back{opacity:1;visibility:visible;pointer-events:auto}
-.hero .world{opacity:0;transform:translateZ(-110px) scale(.88);transition:opacity 1.6s ease,transform 1.7s cubic-bezier(.18,.7,.22,1)}
-.universe-entered .hero .world{opacity:1;transform:translateZ(0) scale(1)}
-.hero-content{z-index:3;transition:opacity .7s}
-body:not(.universe-entered) .hero-content{opacity:0}
-@media(max-width:700px){.original-art{background-size:cover}.landing-enter{width:clamp(180px,48vw,260px)}}
-@media(prefers-reduced-motion:reduce){.original-landing,.original-art,.hero .world{transition-duration:.01ms}}
-</style><style id="inner-universe-journey">
-/* Entering the universe is an intentional reduction of noise. */
-.universe-entered .hero{background:radial-gradient(ellipse at 50% 46%,#151a27 0%,#090c16 37%,#03050b 78%)}
-.universe-entered .collage,.universe-entered .ocean-cover,.universe-entered .galaxy,.universe-entered .ambient{display:none!important}
-.universe-entered .stars{opacity:.19!important;filter:grayscale(1);background-size:173px 179px,241px 233px,139px 149px;animation-duration:180s}
-.universe-entered .neural-canvas{opacity:.15!important;filter:grayscale(1) blur(1.5px);mix-blend-mode:screen}
-.universe-entered .world{transform:translateZ(0)!important;transition:opacity 1.8s ease}
-.universe-entered .globe-shell{top:43%;width:clamp(210px,27vw,380px);filter:drop-shadow(0 0 32px #c8d6e82e)!important;transition:top 1.2s,width 1.2s}
-.universe-entered .globe-shell::before{opacity:.24}
-.inner-journey{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:90px 24px clamp(38px,7vh,80px);text-align:center;pointer-events:none;opacity:0;visibility:hidden;transition:opacity 1.4s ease .3s,visibility 1.4s}
-.universe-entered .inner-journey{opacity:1;visibility:visible}
-.journey-progress{position:absolute;top:clamp(25px,5vh,55px);display:flex;gap:12px}
-.journey-dot{width:4px;height:4px;border-radius:50%;background:#d5dce74a;transition:background .7s,box-shadow .7s,transform .7s}
-.journey-dot.is-active{background:#f5f8ff;box-shadow:0 0 12px #f6f8ff;transform:scale(1.35)}
-.journey-copy{max-width:540px;transition:opacity .5s,transform .5s}
-.journey-kicker{font-size:9px;letter-spacing:.33em;color:#bac5d6}
-.journey-copy h2{font-family:Georgia,serif;font-weight:400;letter-spacing:-.035em;font-size:clamp(25px,3vw,43px);line-height:1.18;margin:14px 0}
-.journey-copy p{font-size:13px;line-height:1.7;color:#b9c3d0;margin:0 auto;max-width:410px}
-.journey-actions{display:flex;gap:24px;margin-top:24px;align-items:center}
-.journey-actions button{pointer-events:auto;cursor:pointer;background:transparent;border:0;color:#f5f7fa;letter-spacing:.18em;font-size:10px;padding:13px 8px}
-.journey-next{border-bottom:1px solid #ffffff69!important}
-.journey-next span{margin-left:12px}
-.journey-previous{opacity:.55}
-.journey-reflection{pointer-events:auto;width:min(100%,440px);margin-top:20px}
-.journey-reflection label{display:block;font:italic 16px Georgia,serif;color:#e6e9f1;margin-bottom:12px}
-.journey-reflection textarea{width:100%;background:#ffffff09;border:1px solid #ffffff30;border-radius:14px;padding:14px 16px;color:#fff;font:14px Arial,sans-serif;resize:vertical;outline:none}
-.journey-reflection textarea:focus{border-color:#ffffff8c}
-.journey-reflection p{font-size:10px;color:#a5aebd;margin-top:9px}
-.universe-entered .hero-content{display:none}
-body:not(.universe-entered) .inner-journey{pointer-events:none}
-@media(max-width:700px){.universe-entered .globe-shell{top:39%;width:min(60vw,290px)}.inner-journey{padding-bottom:8vh}.journey-copy h2{font-size:27px}.journey-copy p{font-size:12px}}
-@media(prefers-reduced-motion:reduce){.inner-journey,.journey-copy,.journey-dot{transition:none}}
-</style><style id="spatial-inner-world">
-/* Full-screen, physically layered 3D environment behind the independent globe. */
-.inner-space-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;opacity:0;pointer-events:none;transition:opacity 2s ease}
-.universe-entered .inner-space-canvas{opacity:1}
-.universe-entered .hero{background:#040711}
-.universe-entered .stars,.universe-entered .neural-canvas{display:none!important}
-.universe-entered .world{z-index:3;pointer-events:none}
-.universe-entered .globe-shell{pointer-events:auto}
-.inner-journey{z-index:6}
-.universe-entered .globe-shell{top:43%}
-body[data-journey-stage="1"] .globe-shell{top:39%;width:clamp(195px,23vw,325px)}
-body[data-journey-stage="2"] .globe-shell{top:39%;width:clamp(205px,25vw,355px)}
-@media(max-width:700px){.universe-entered .globe-shell{top:36%}body[data-journey-stage="1"] .globe-shell,body[data-journey-stage="2"] .globe-shell{top:35%;width:55vw}}
 </style></head><body><main><section class="hero" id="home" aria-label="The Future Is Yours immersive universe">
-<div class="original-landing" id="original-landing" aria-label="The Future Is Yours landing page">
- <div class="original-art" aria-hidden="true"></div>
- <div class="original-shade" aria-hidden="true"></div>
- <button type="button" class="landing-enter" id="enter" aria-label="Explore Universe"><span>EXPLORE UNIVERSE</span></button>
-</div>
-<button type="button" class="universe-back" id="universe-back" aria-label="Return to landing page">BACK</button>
+<div class="world" id="world"><div class="galaxy"></div><div class="stars"></div><div class="collage" role="img" aria-label="The Future Is Yours art collage floating in a cosmic neural universe"></div><canvas class="neural-canvas" id="neural-canvas" aria-hidden="true"></canvas><div class="ambient"></div><div class="ocean-cover" aria-label="A calm ocean at sunset"></div><div class="globe-shell" id="globe-shell" role="img" tabindex="0" aria-label="Interactive iridescent pearl-glass 3D sphere with original luminous white logo. Drag to rotate or use arrow keys."><canvas id="globe-canvas" aria-hidden="true"></canvas><div id="globe-loading" aria-hidden="true">LOADING UNIVERSE</div></div></div>
 
-<canvas id="inner-space-canvas" class="inner-space-canvas" aria-hidden="true"></canvas><div class="world" id="world"><div class="galaxy"></div><div class="stars"></div><div class="collage" role="img" aria-label="The Future Is Yours art collage floating in a cosmic neural universe"></div><canvas class="neural-canvas" id="neural-canvas" aria-hidden="true"></canvas><div class="ambient"></div><div class="ocean-cover" aria-label="A calm ocean at sunset"></div><div class="globe-shell" id="globe-shell" role="img" tabindex="0" aria-label="Interactive iridescent pearl-glass 3D sphere with original luminous white logo. Drag to rotate or use arrow keys."><canvas id="globe-canvas" aria-hidden="true"></canvas><div id="globe-loading" aria-hidden="true">LOADING UNIVERSE</div></div></div>
-
-<div class="inner-journey" id="inner-journey" aria-label="Journey within yourself">
- <div class="journey-progress" aria-label="Journey stages"><span class="journey-dot is-active"></span><span class="journey-dot"></span><span class="journey-dot"></span></div>
- <div class="journey-copy" aria-live="polite"><span class="journey-kicker" id="journey-kicker">01 / ARRIVE</span><h2 id="journey-heading">Come back to yourself.</h2><p id="journey-description">There is nowhere else you need to be. Follow the rhythm of the light.</p></div>
- <div class="journey-actions"><button type="button" id="journey-previous" class="journey-previous" hidden>PREVIOUS</button><button type="button" id="journey-next" class="journey-next">BEGIN THE JOURNEY <span aria-hidden="true">→</span></button></div>
- <div class="journey-reflection" id="journey-reflection" hidden><label for="journey-thought">What is present for you right now?</label><textarea id="journey-thought" rows="2" placeholder="A thought, a feeling, a question…"></textarea><p>Just for you. Nothing is shared or saved.</p></div>
- </div></section><section class="intro" id="about"><span class="eyebrow">The art of living · Human experience</span><h1>There is a whole universe within you.</h1><p>Explore the connections between art, stories, experiences and the people we become. This is a place for curiosity, presence and the beautiful complexity of being human.</p><div class="links" id="explore"><button id="contact-open" type="button">Get in touch</button><a href="#home">Back to the universe</a></div></section></main><footer><span>© <span id="year"></span> The Future Is Yours</span><span>Presence over performance</span></footer>
+<div class="hero-content"><p>An invitation to look within</p></div></section><section class="intro" id="about"><span class="eyebrow">The art of living · Human experience</span><h1>There is a whole universe within you.</h1><p>Explore the connections between art, stories, experiences and the people we become. This is a place for curiosity, presence and the beautiful complexity of being human.</p><div class="links" id="explore"><button id="contact-open" type="button">Get in touch</button><a href="#home">Back to the universe</a></div></section></main><footer><span>© <span id="year"></span> The Future Is Yours</span><span>Presence over performance</span></footer>
 <dialog class="contact-dialog" id="contact-dialog" aria-labelledby="contact-heading"><button type="button" class="close-dialog" id="contact-close" aria-label="Close contact form">×</button><span class="eyebrow">Let's connect</span><h2 id="contact-heading">Get in touch.</h2><p>Have an idea, a question or simply something to share? I'd love to hear from you.</p><form class="contact-form" id="contact-form"><label>Name<input name="name" autocomplete="name" maxlength="100" required></label><label>Email<input type="email" name="email" autocomplete="email" maxlength="254" required></label><label>Message<textarea name="message" maxlength="5000" required></textarea></label><div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div><button type="submit" id="contact-submit">Send message</button><p class="form-status" id="form-status" role="status" aria-live="polite"></p></form></dialog>
 <script>
-document.getElementById('year').textContent=new Date().getFullYear();const landing=document.getElementById('original-landing'),back=document.getElementById('universe-back');
-function setUniverseEntered(entered,updateHash=true){
- document.body.classList.toggle('universe-entered',entered);
- landing.setAttribute('aria-hidden',entered?'true':'false');
- document.getElementById('enter').tabIndex=entered?-1:0;
- back.tabIndex=entered?0:-1;
- if(updateHash){history.replaceState(null,'',entered?'#universe':'#home')}
-}
-document.getElementById('enter').addEventListener('click',()=>setUniverseEntered(true));
-back.addEventListener('click',()=>setUniverseEntered(false));
-if(location.hash==='#universe')setUniverseEntered(true,false);
-const journeyStages=[
- {k:'01 / ARRIVE',h:'Come back to yourself.',d:'There is nowhere else you need to be. Follow the rhythm of the light.',action:'CONTINUE'},
- {k:'02 / REFLECT',h:'What is alive within you?',d:'Not what the world expects. Just what you notice.',action:'CONTINUE'},
- {k:'03 / CONNECT',h:'You are part of something larger.',d:'Your inner world is not separate from the universe around you.',action:'BEGIN AGAIN'}
-];
-let journeyIndex=0;
-const journeyK=document.getElementById('journey-kicker'),journeyH=document.getElementById('journey-heading'),journeyD=document.getElementById('journey-description'),journeyNext=document.getElementById('journey-next'),journeyPrev=document.getElementById('journey-previous'),journeyReflection=document.getElementById('journey-reflection');
-function renderJourney(){
- const stage=journeyStages[journeyIndex];journeyK.textContent=stage.k;journeyH.textContent=stage.h;journeyD.textContent=stage.d;
- journeyNext.innerHTML=(journeyIndex===2?'BEGIN AGAIN':journeyIndex===0?'BEGIN THE JOURNEY':'CONTINUE')+' <span aria-hidden="true">→</span>';
- journeyPrev.hidden=journeyIndex===0;journeyReflection.hidden=journeyIndex!==1;
- document.querySelectorAll('.journey-dot').forEach((dot,i)=>dot.classList.toggle('is-active',i===journeyIndex));
- document.body.dataset.journeyStage=String(journeyIndex);
-}
-journeyNext.addEventListener('click',()=>{journeyIndex=(journeyIndex+1)%journeyStages.length;renderJourney()});
-journeyPrev.addEventListener('click',()=>{journeyIndex=Math.max(0,journeyIndex-1);renderJourney()});
-renderJourney();
-
-const world=document.getElementById('world'),scene=document.querySelector('.hero');let yaw=0,pitch=0,travel=0,dragging=false,px=0,py=0;function updateView(){world.style.setProperty('--yaw',yaw+'deg');world.style.setProperty('--pitch',pitch+'deg');/* travel follows native scrolling in easeWorldScroll */}scene.addEventListener('pointerdown',e=>{if(!document.body.classList.contains('universe-entered')||e.target.closest('a,button'))return;dragging=true;px=e.clientX;py=e.clientY;scene.setPointerCapture(e.pointerId)});scene.addEventListener('pointermove',e=>{if(!document.body.classList.contains('universe-entered'))return;if(dragging){yaw=Math.max(-23,Math.min(23,yaw+(e.clientX-px)*.065));pitch=Math.max(-15,Math.min(15,pitch-(e.clientY-py)*.065));px=e.clientX;py=e.clientY}else if(matchMedia('(pointer:fine)').matches){yaw=(e.clientX/innerWidth-.5)*9;pitch=(.5-e.clientY/innerHeight)*6}updateView()});scene.addEventListener('pointerup',()=>dragging=false);scene.addEventListener('pointercancel',()=>dragging=false);// Allow native page scrolling; ease the 3D environment towards the scroll position.
+document.getElementById('year').textContent=new Date().getFullYear();document.getElementById('enter').addEventListener('click',()=>document.getElementById('about').scrollIntoView({behavior:'smooth'}));const world=document.getElementById('world'),scene=document.querySelector('.hero');let yaw=0,pitch=0,travel=0,dragging=false,px=0,py=0;function updateView(){world.style.setProperty('--yaw',yaw+'deg');world.style.setProperty('--pitch',pitch+'deg');/* travel follows native scrolling in easeWorldScroll */}scene.addEventListener('pointerdown',e=>{if(e.target.closest('a,button'))return;dragging=true;px=e.clientX;py=e.clientY;scene.setPointerCapture(e.pointerId)});scene.addEventListener('pointermove',e=>{if(dragging){yaw=Math.max(-23,Math.min(23,yaw+(e.clientX-px)*.065));pitch=Math.max(-15,Math.min(15,pitch-(e.clientY-py)*.065));px=e.clientX;py=e.clientY}else if(matchMedia('(pointer:fine)').matches){yaw=(e.clientX/innerWidth-.5)*9;pitch=(.5-e.clientY/innerHeight)*6}updateView()});scene.addEventListener('pointerup',()=>dragging=false);scene.addEventListener('pointercancel',()=>dragging=false);// Allow native page scrolling; ease the 3D environment towards the scroll position.
 let scrollTravel=0,renderTravel=0;
 function updateScrollTravel(){const rect=scene.getBoundingClientRect();const progress=Math.max(0,Math.min(1,-rect.top/Math.max(scene.offsetHeight,1)));scrollTravel=progress*-120}
 addEventListener('scroll',updateScrollTravel,{passive:true});updateScrollTravel();
@@ -283,65 +178,4 @@ function resize(){const w=shell.clientWidth,h=shell.clientHeight;renderer.setSiz
 const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 function tick(){requestAnimationFrame(tick);if(!drag&&!reduce)ry+=.001;mysticalMaterial.uniforms.time.value+=reduce?0:.016;globe.rotation.set(rx,ry,0);camera.position.z+=(zoom-camera.position.z)*.08;renderer.render(scene,camera)}requestAnimationFrame(tick);
 }catch(e){console.error('Globe unavailable',e);shell.classList.add('is-ready')}
-</script><script type="module" id="inner-space-engine">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js';
-const canvas=document.getElementById('inner-space-canvas');
-try{
-const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'low-power'});
-renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.7));
-const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(53,1,.1,100);
-camera.position.set(0,0,13);
-const world=new THREE.Group();scene.add(world);
-const count=1000,positions=new Float32Array(count*3),sizes=new Float32Array(count);
-for(let i=0;i<count;i++){
- const a=i*2.3999632,r=Math.sqrt((i+.5)/count);
- positions[i*3]=Math.cos(a)*r*15+(Math.sin(i*17.7)*.35);
- positions[i*3+1]=Math.sin(a)*r*10+(Math.cos(i*9.1)*.3);
- positions[i*3+2]=-4-Math.random()*19;
- sizes[i]=.4+Math.random()*.6;
-}
-const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(positions,3));
-const dust=new THREE.Points(geo,new THREE.PointsMaterial({color:0xb6c6db,size:.035,transparent:true,opacity:.55,sizeAttenuation:true,depthWrite:false}));world.add(dust);
-const pathGroup=new THREE.Group();world.add(pathGroup);
-const pathMat=new THREE.LineBasicMaterial({color:0x9eaec8,transparent:true,opacity:.14,depthWrite:false});
-for(let i=0;i<17;i++){
- const theta=i*2.39996;
- const points=[];
- for(let j=0;j<=75;j++){
-  const t=j/75;
-  const radius=2.2+t*9;
-  const ang=theta+Math.sin(t*5+i)*.18;
-  points.push(new THREE.Vector3(Math.cos(ang)*radius,Math.sin(ang)*radius*.67,-2-t*12+Math.sin(t*8+i)*.3));
- }
- const curve=new THREE.CatmullRomCurve3(points);
- pathGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(120)),pathMat));
-}
-const halo=new THREE.Group();world.add(halo);
-for(let i=0;i<4;i++){
- const ring=new THREE.Mesh(new THREE.TorusGeometry(2.45+i*.44,.005,3,160),new THREE.MeshBasicMaterial({color:i%2?0xb8abc8:0xa2c8d2,transparent:true,opacity:.09-i*.012,depthWrite:false}));
- ring.rotation.x=.3+i*.17;ring.rotation.y=i*.29;ring.position.z=-2.8-i*.5;halo.add(ring);
-}
-const glowMat=new THREE.SpriteMaterial({color:0xb2b9d7,transparent:true,opacity:.09,depthWrite:false,blending:THREE.AdditiveBlending});
-const glow=new THREE.Sprite(glowMat);glow.scale.set(8,8,1);glow.position.z=-7;world.add(glow);
-let targetX=0,targetY=0,stage=0,stageMix=0;
-addEventListener('pointermove',e=>{targetX=(e.clientX/innerWidth-.5)*.15;targetY=(e.clientY/innerHeight-.5)*.12},{passive:true});
-function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}resize();addEventListener('resize',resize);
-const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;const clock=new THREE.Clock();
-function animate(){
- requestAnimationFrame(animate);
- if(!document.body.classList.contains('universe-entered'))return;
- const t=clock.getElapsedTime();stage=Number(document.body.dataset.journeyStage||0);
- stageMix+=(stage-stageMix)*.025;
- world.rotation.y+=(targetX-world.rotation.y)*.016;
- world.rotation.x+=(targetY-world.rotation.x)*.016;
- if(!reduced){dust.rotation.z=t*.0007;pathGroup.rotation.z=t*.0015;halo.rotation.z=t*.008}
- camera.position.z+=(13-stageMix*1.9-camera.position.z)*.022;
- pathMat.opacity=.11+stageMix*.035;
- halo.scale.setScalar(1+stageMix*.18);
- glowMat.opacity=.07+Math.sin(t*.6)*.025+stageMix*.025;
- renderer.render(scene,camera);
-}
-animate();
-}catch(error){console.warn('Inner space 3D environment unavailable',error)}
 </script></body></html>
