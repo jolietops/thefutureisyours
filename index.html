@@ -74,13 +74,15 @@ header{z-index:9}
 .world{transition:transform .11s linear}
 .hero-content{bottom:4%}
 </style><style id="universe-bubble-glow">
+/* A restrained nebula halo: moonlit white, smoky mauve, and deep blue.
+   No conic gradient or separate saturated color bands. */
 .globe-shell{
- filter:drop-shadow(0 0 13px rgba(255,219,244,.48)) drop-shadow(0 0 29px rgba(126,230,239,.38)) drop-shadow(0 0 53px rgba(187,156,245,.30))!important;
+ filter:drop-shadow(0 0 14px rgba(241,231,238,.27)) drop-shadow(0 0 36px rgba(163,149,180,.20)) drop-shadow(0 0 66px rgba(91,109,142,.15))!important;
 }
 .globe-shell::before{
- content:"";position:absolute;inset:-12%;border-radius:50%;pointer-events:none;z-index:-1;
- background:conic-gradient(from 35deg,rgba(122,237,235,.23),rgba(238,168,218,.20),rgba(170,149,255,.19),rgba(252,213,176,.17),rgba(122,237,235,.23));
- filter:blur(29px);opacity:.85;
+ content:"";position:absolute;inset:-15%;border-radius:50%;pointer-events:none;z-index:-1;
+ background:radial-gradient(ellipse at 48% 48%,rgba(230,219,230,.12) 0%,rgba(165,149,175,.11) 42%,rgba(84,99,129,.08) 64%,transparent 78%);
+ filter:blur(30px);opacity:.7;
 }
 </style></head><body><main><section class="hero" id="home" aria-label="The Future Is Yours immersive universe">
 <div class="world" id="world"><div class="galaxy"></div><div class="stars"></div><div class="collage" role="img" aria-label="The Future Is Yours art collage floating in a cosmic neural universe"></div><canvas class="neural-canvas" id="neural-canvas" aria-hidden="true"></canvas><div class="ambient"></div><div class="ocean-cover" aria-label="A calm ocean at sunset"></div><div class="globe-shell" id="globe-shell" role="img" tabindex="0" aria-label="Interactive iridescent pearl-glass 3D sphere with original luminous white logo. Drag to rotate or use arrow keys."><canvas id="globe-canvas" aria-hidden="true"></canvas><div id="globe-loading" aria-hidden="true">LOADING UNIVERSE</div></div></div>
