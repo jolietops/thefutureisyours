@@ -68,7 +68,7 @@ header{z-index:9}
 .globe-shell{background:transparent!important;box-shadow:none!important;filter:drop-shadow(0 0 13px #eaf8ff25)!important}
 .globe-shell::after{display:none!important}
 </style></head><body><main><section class="hero" id="home" aria-label="The Future Is Yours immersive universe">
-<div class="world" id="world"><div class="galaxy"></div><div class="stars"></div><div class="collage" role="img" aria-label="The Future Is Yours art collage floating in a cosmic neural universe"></div><canvas class="neural-canvas" id="neural-canvas" aria-hidden="true"></canvas><div class="ambient"></div><div class="ocean-cover" aria-label="A calm ocean at sunset"></div><div class="globe-shell" id="globe-shell" role="img" tabindex="0" aria-label="Interactive translucent 3D sphere with luminous white Future Is Yours logo. Drag to rotate or use arrow keys."><canvas id="globe-canvas" aria-hidden="true"></canvas><div id="globe-loading" aria-hidden="true">LOADING UNIVERSE</div></div></div>
+<div class="world" id="world"><div class="galaxy"></div><div class="stars"></div><div class="collage" role="img" aria-label="The Future Is Yours art collage floating in a cosmic neural universe"></div><canvas class="neural-canvas" id="neural-canvas" aria-hidden="true"></canvas><div class="ambient"></div><div class="ocean-cover" aria-label="A calm ocean at sunset"></div><div class="globe-shell" id="globe-shell" role="img" tabindex="0" aria-label="Interactive iridescent pearl-glass 3D sphere with original luminous white logo. Drag to rotate or use arrow keys."><canvas id="globe-canvas" aria-hidden="true"></canvas><div id="globe-loading" aria-hidden="true">LOADING UNIVERSE</div></div></div>
 <header><nav class="menu" aria-label="Main navigation"><a href="#about">About</a><a href="#explore">Explore</a></nav></header>
 <div class="hero-content"><p>An invitation to look within</p><span>Move your cursor · Discover your universe</span></div><div class="world-tip">DRAG TO EXPLORE · SCROLL TO TRAVEL</div></section><section class="intro" id="about"><span class="eyebrow">The art of living · Human experience</span><h1>There is a whole universe within you.</h1><p>Explore the connections between art, stories, experiences and the people we become. This is a place for curiosity, presence and the beautiful complexity of being human.</p><div class="links" id="explore"><button id="contact-open" type="button">Get in touch</button><a href="#home">Back to the universe</a></div></section></main><footer><span>© <span id="year"></span> The Future Is Yours</span><span>Presence over performance</span></footer>
 <dialog class="contact-dialog" id="contact-dialog" aria-labelledby="contact-heading"><button type="button" class="close-dialog" id="contact-close" aria-label="Close contact form">×</button><span class="eyebrow">Let's connect</span><h2 id="contact-heading">Get in touch.</h2><p>Have an idea, a question or simply something to share? I'd love to hear from you.</p><form class="contact-form" id="contact-form"><label>Name<input name="name" autocomplete="name" maxlength="100" required></label><label>Email<input type="email" name="email" autocomplete="email" maxlength="254" required></label><label>Message<textarea name="message" maxlength="5000" required></textarea></label><div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div><button type="submit" id="contact-submit">Send message</button><p class="form-status" id="form-status" role="status" aria-live="polite"></p></form></dialog>
@@ -92,44 +92,43 @@ logoTexture.minFilter=THREE.LinearMipmapLinearFilter;logoTexture.magFilter=THREE
 // The logo path above is unchanged. Only its lighting and anti-aliasing are refined.
 const mysticalMaterial=new THREE.ShaderMaterial({
  uniforms:{logoMask:{value:logoTexture},time:{value:0}},
- transparent:true,depthWrite:false,side:THREE.FrontSide,
+ transparent:true,depthWrite:false,side:THREE.FrontSide,extensions:{derivatives:true},
  vertexShader:`varying vec3 vLocal;varying vec3 vNormalView;varying vec3 vEye;void main(){vLocal=position;vec4 viewPos=modelViewMatrix*vec4(position,1.);vNormalView=normalize(normalMatrix*normal);vEye=normalize(-viewPos.xyz);gl_Position=projectionMatrix*viewPos;}`,
- fragmentShader:`uniform sampler2D logoMask;uniform float time;varying vec3 vLocal;varying vec3 vNormalView;varying vec3 vEye;void main(){
+ fragmentShader:`uniform sampler2D logoMask;uniform float time;varying vec3 vLocal;varying vec3 vNormalView;varying vec3 vEye;
+ vec3 spectrum(float t){return .5+.5*cos(6.2831853*(t+vec3(.00,.32,.65)));}
+ void main(){
  vec2 uv=vLocal.xy*.5+.5;
  float mask=texture2D(logoMask,uv).a;
- float edge=max(fwidth(mask)*.85,.025);
- float emblem=smoothstep(.5-edge,.5+edge,mask)*smoothstep(.015,.20,vLocal.z);
- // A broad, low-opacity halo softens the silhouette without changing its contours.
- vec2 px=vec2(1./1024.);
- float bloom=0.;
- bloom+=texture2D(logoMask,uv+px*vec2(9.,0.)).a;
- bloom+=texture2D(logoMask,uv+px*vec2(-9.,0.)).a;
- bloom+=texture2D(logoMask,uv+px*vec2(0.,9.)).a;
- bloom+=texture2D(logoMask,uv+px*vec2(0.,-9.)).a;
- bloom+=texture2D(logoMask,uv+px*vec2(6.,6.)).a;
- bloom+=texture2D(logoMask,uv+px*vec2(-6.,-6.)).a;
- bloom=bloom/6.*smoothstep(.015,.20,vLocal.z);
- float halo=max(0.,bloom-emblem)*.23;
+ float edge=max(fwidth(mask)*1.15,.012);
+ float emblem=smoothstep(.5-edge,.5+edge,mask)*smoothstep(.025,.19,vLocal.z);
  float facing=clamp(dot(normalize(vNormalView),normalize(vEye)),0.,1.);
- float rim=pow(1.-facing,3.5);
- float breathing=.96+.04*sin(time*.65);
- float alpha=clamp(.025+rim*.30+emblem*.91+halo*breathing,0.,.97);
- vec3 color=mix(vec3(.83,.93,.98),vec3(1.,.995,.975),emblem);
+ float rim=pow(1.-facing,2.65);
+ float angle=atan(vLocal.y,vLocal.x);
+ float flow=sin(angle*3.1+vLocal.y*5.7+sin(vLocal.x*9.+time*.18)*.45);
+ float interference=(1.-facing)*2.1+flow*.13+time*.035;
+ vec3 rainbow=spectrum(interference*.44+.11);
+ // Thin-film rainbow is strongest at glancing angles; the center stays milky pearl.
+ vec3 pearl=vec3(.92,.945,.94);
+ vec3 iridescence=mix(pearl,rainbow*.68+vec3(.37,.38,.4),smoothstep(.22,.89,rim)*.95);
+ float highlight=pow(max(0.,dot(normalize(vNormalView),normalize(vec3(-.48,.62,.74)))),18.);
+ vec3 color=iridescence+vec3(.12,.11,.12)*highlight;
+ // White logo is the same unmodified hand-drawn mark, gently radiant.
+ color=mix(color,vec3(1.04,1.035,1.02),emblem);
+ float alpha=clamp(.19+rim*.67+highlight*.12+emblem*.78,0.,.98);
  gl_FragColor=vec4(color,alpha);
  }`
 });
-const white=new THREE.Mesh(new THREE.SphereGeometry(1,128,96),mysticalMaterial);globe.add(white);
-// The far inner wall stays visible through the transparent front hemisphere.
+const white=new THREE.Mesh(new THREE.SphereGeometry(1,160,112),mysticalMaterial);globe.add(white);
 const innerMaterial=new THREE.ShaderMaterial({
  transparent:true,depthWrite:false,side:THREE.BackSide,
- vertexShader:`varying vec3 vNormalView;varying vec3 vEye;varying vec3 vLocal;void main(){vLocal=position;vec4 p=modelViewMatrix*vec4(position,1.);vNormalView=normalize(normalMatrix*normal);vEye=normalize(-p.xyz);gl_Position=projectionMatrix*p;}`,
- fragmentShader:`varying vec3 vNormalView;varying vec3 vEye;varying vec3 vLocal;void main(){float facing=abs(dot(normalize(vNormalView),normalize(vEye)));float rim=pow(1.-facing,2.5);float fibers=pow(max(0.,sin(vLocal.y*75.)),24.)*.028;float alpha=.038+rim*.22+fibers;gl_FragColor=vec4(.88,.95,1.,alpha);}`
+ vertexShader:`varying vec3 n;varying vec3 eye;varying vec3 local;void main(){local=position;vec4 p=modelViewMatrix*vec4(position,1.);n=normalize(normalMatrix*normal);eye=normalize(-p.xyz);gl_Position=projectionMatrix*p;}`,
+ fragmentShader:`varying vec3 n;varying vec3 eye;varying vec3 local;void main(){float f=abs(dot(normalize(n),normalize(eye)));float rim=pow(1.-f,2.2);float wave=sin(local.x*12.+local.y*9.)*.025;vec3 pearl=vec3(.89,.94,.96);gl_FragColor=vec4(pearl,.07+rim*.19+wave);}`
 });
-const inside=new THREE.Mesh(new THREE.SphereGeometry(.996,96,64),innerMaterial);globe.add(inside);
-const glow=new THREE.Mesh(new THREE.SphereGeometry(1.045,96,64),new THREE.ShaderMaterial({
+globe.add(new THREE.Mesh(new THREE.SphereGeometry(.991,128,96),innerMaterial));
+const glow=new THREE.Mesh(new THREE.SphereGeometry(1.035,96,64),new THREE.ShaderMaterial({
  transparent:true,depthWrite:false,side:THREE.BackSide,
  vertexShader:`varying vec3 n;varying vec3 eye;void main(){vec4 v=modelViewMatrix*vec4(position,1.);n=normalize(normalMatrix*normal);eye=normalize(-v.xyz);gl_Position=projectionMatrix*v;}`,
- fragmentShader:`varying vec3 n;varying vec3 eye;void main(){float rim=pow(1.-max(dot(normalize(n),normalize(eye)),0.),4.);gl_FragColor=vec4(.9,.97,1.,rim*.13);}`
+ fragmentShader:`varying vec3 n;varying vec3 eye;void main(){float rim=pow(1.-max(dot(normalize(n),normalize(eye)),0.),4.);gl_FragColor=vec4(.89,.98,1.,rim*.18);}`
 }));globe.add(glow);
 let drag=false,lastX=0,lastY=0,rx=-.08,ry=0,zoom=4.5;
 shell.addEventListener('pointerdown',e=>{drag=true;lastX=e.clientX;lastY=e.clientY;shell.setPointerCapture(e.pointerId);e.stopPropagation()});
