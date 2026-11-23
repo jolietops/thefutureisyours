@@ -15,3 +15,4 @@ A static website ready for GitHub + Cloudflare Pages.
 - Replace the placeholder `hello@thefutureis-yours.com` email address before launch.
 
 Note: The artwork is used as one background image. Individual cards within it are not separate clickable elements yet.
+x
